@@ -27,11 +27,15 @@ class App extends Component {
         />
         <Route
           path='/note/:noteId'
-          component={Note}
+          render={routeProps => {
+            return <Note {...routeProps} store={this.state.store}/>
+          }}
         />
         <Route
           path='/folder/:folderId'
-          component={Folder}
+          render={routeProps => {
+            return <Folder {...routeProps} store={this.state.store} />
+          }}
         />
       </div>
     )

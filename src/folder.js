@@ -1,40 +1,35 @@
 import React, { Component } from 'react';
-import { Route, Link, NavLink } from 'react-router-dom';
+import { Route, Link } from 'react-router-dom';
+import NoteItem from './noteItem/noteItem';
+import FolderItem from './folderItem/folderItem';
+import Header from './header';
 import './folder.css';
-import STORE from './dummy-store.js';
 
 class Folder extends Component {
     render() {
-        const folders = STORE.folders.map(folder => {
+        const folders = this.props.store.folders.map(folder => {
             return (
-                <li key={folder.id}>
-                    <NavLink to={`/folder/${folder.id}`}>
-                        {folder.name}
-                    </NavLink>
-                </li>
+                <FolderItem
+                    id={folder.id}
+                    name={folder.name}
+                />
             )
         });
-        const notes = STORE.notes.map(note => {
+        const notes = this.props.store.notes.map(note => {
             if(note.folderId === this.props.match.params.folderId){
                 return(
-                <li key={note.id}>
-                    <Link to={`/note/${note.id}`}>
-                        <p>{note.name}</p>
-                    </Link>
-                    <p>Date Modified: {note.modified}</p>
-                    <button>Delete Note</button>
-                </li>
+                    <NoteItem
+                    name={note.name}
+                    id={note.id}
+                    dateMod={note.modified}
+                />
                 )}
             }
         )
         
         return (
             <div>
-                <header>
-                    <Link to='/'>
-                        <h1>Noteful</h1>
-                    </Link>
-                </header>
+                <Header />
                 <section className="container">
                     <nav className="item">
                         <ul>
