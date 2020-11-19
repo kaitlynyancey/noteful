@@ -2,14 +2,20 @@ import React, { Component } from 'react';
 import { Route, Link } from 'react-router-dom';
 import NoteItem from './noteItem/noteItem';
 import Header from './header';
+import NotesContext from './NotesContext';
 
 class Note extends Component {
+    static contextType = NotesContext;
+
+    handleDeleteNote = () => {
+        this.props.history.push('/')
+    }
 
     render() {
-        const note = this.props.store.notes.find(itm =>
+        const note = this.context.notes.find(itm =>
             itm.id === this.props.match.params.noteId
         )
-        const folder = this.props.store.folders.find(itm =>
+        const folder = this.context.folders.find(itm =>
             itm.id === note.folderId
         )
         return (
@@ -30,6 +36,7 @@ class Note extends Component {
                             name={note.name}
                             id={note.id}
                             dateMod={note.modified}
+                            onDeleteNote={this.handleDeleteNote}
                         />
                         <div>
                             <h3>Content:</h3>

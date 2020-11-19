@@ -3,11 +3,13 @@ import { Route, Link } from 'react-router-dom';
 import NoteItem from './noteItem/noteItem';
 import FolderItem from './folderItem/folderItem';
 import Header from './header';
+import NotesContext from './NotesContext';
 import './folder.css';
 
 class Folder extends Component {
+    static contextType = NotesContext;
     render() {
-        const folders = this.props.store.folders.map(folder => {
+        const folders = this.context.folders.map(folder => {
             return (
                 <FolderItem
                     id={folder.id}
@@ -15,7 +17,7 @@ class Folder extends Component {
                 />
             )
         });
-        const notes = this.props.store.notes.map(note => {
+        const notes = this.context.notes.map(note => {
             if(note.folderId === this.props.match.params.folderId){
                 return(
                     <NoteItem

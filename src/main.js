@@ -3,11 +3,14 @@ import { Route, Link } from 'react-router-dom';
 import NoteItem from './noteItem/noteItem';
 import FolderItem from './folderItem/folderItem';
 import Header from './header';
+import NotesContext from './NotesContext';
 import './main.css';
 
 class Main extends Component {
+    static contextType = NotesContext;
+
     render() {
-        const notes = this.props.store.notes.map(note => {
+        const notes = this.context.notes.map(note => {
             return (
                 <NoteItem
                     name={note.name}
@@ -16,7 +19,7 @@ class Main extends Component {
                 />
             )
         });
-        const folders = this.props.store.folders.map(folder => {
+        const folders = this.context.folders.map(folder => {
             return (
                 <FolderItem
                     id={folder.id}
