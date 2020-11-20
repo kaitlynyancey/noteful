@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Route, Link } from 'react-router-dom';
 import NoteItem from './noteItem/noteItem';
 import Header from './header';
 import NotesContext from './NotesContext';
@@ -7,7 +6,7 @@ import NotesContext from './NotesContext';
 class Note extends Component {
     static contextType = NotesContext;
 
-    handleDeleteNote = () => {
+    handleDeleteNote = noteId => {
         this.props.history.push('/')
     }
 

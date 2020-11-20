@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import NotesContext from '../NotesContext';
 
-function deleteNoteRequest(noteId, callback) {
+function deleteNoteRequest(noteId, callback, onDeleteNote) {
     fetch(`http://localhost:9090/notes/${noteId}`, {
         method: 'DELETE'
     })
@@ -13,6 +13,7 @@ function deleteNoteRequest(noteId, callback) {
             return response.json()
         })
         .then(data => {
+            onDeleteNote(noteId)
             callback(noteId)
         })
         .catch(error => console.error(error))
@@ -36,7 +37,8 @@ class NoteItem extends Component {
                             onClick={() => {
                                 deleteNoteRequest(
                                     this.props.id,
-                                    context.deleteNote
+                                    context.deleteNote,
+                                    this.props.onDeleteNote,
                                 )
                             }}
                         >
