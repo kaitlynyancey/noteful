@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import NotesContext from '../NotesContext';
+import PropTypes from 'prop-types';
 
 function deleteNoteRequest(noteId, callback, onDeleteNote) {
     fetch(`http://localhost:9090/notes/${noteId}`, {
@@ -29,7 +30,7 @@ class NoteItem extends Component {
                 {(context) => (
                     <li key={this.props.id}>
                         <Link to={`/note/${this.props.id}`}>
-                            <p>{this.props.name}</p>
+                            <h3>{this.props.name}</h3>
                         </Link>
                         <p>Date Modified: {this.props.dateMod}</p>
                         <button
@@ -49,6 +50,12 @@ class NoteItem extends Component {
             </NotesContext.Consumer>
         )
     }
+}
+
+NoteItem.propTypes = {
+    name: PropTypes.string.isRequired,
+    id: PropTypes.string.isRequired,
+    dateMod: PropTypes.string.isRequired
 }
 
 export default NoteItem;

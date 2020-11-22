@@ -5,6 +5,8 @@ import Main from './main.js';
 import Note from './note.js';
 import Folder from './folder.js';
 import NotesContext from './NotesContext';
+import AddFolder from './AddFolder/AddFolder';
+import AddNote from './AddNote/AddNote';
 
 class App extends Component {
   constructor(props) {
@@ -39,6 +41,14 @@ class App extends Component {
     })
   }
 
+  addFolder = folder => {
+    this.state.folders.push(folder)
+  }
+
+  addNote = note => {
+    this.state.notes.push(note)
+  }
+
   componentDidMount() {
     fetch('http://localhost:9090/folders', {
       method: 'GET'
@@ -71,6 +81,8 @@ class App extends Component {
       notes: this.state.notes,
       folders: this.state.folders,
       deleteNote: this.deleteNote,
+      addFolder: this.addFolder,
+      addNote: this.addNote
     }
     return (
       <div>
@@ -86,6 +98,14 @@ class App extends Component {
           <Route
             path='/folder/:folderId'
             component={Folder}
+          />
+          <Route
+            path='/addfolder'
+            component={AddFolder}
+          />
+          <Route
+            path='/addnote'
+            component={AddNote}
           />
         </NotesContext.Provider>
       </div>

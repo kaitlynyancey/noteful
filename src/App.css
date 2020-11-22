@@ -1,3 +1,36 @@
 *{
   margin: 0;
 }
+
+a {
+  text-decoration: none;
+  color: black;
+}
+
+ a:link {
+  color: black;
+}
+
+
+
+
+button.add {
+  margin-left: 50px;
+  font-size: 20px;
+  margin-bottom: 20px;
+  background-color: rgba(97, 108, 112, 0.966);
+}
+
+h1 {
+  font-size: 48px;
+  font-family: 'rock salt';
+}
+
+.center {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+
+
+

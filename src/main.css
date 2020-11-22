@@ -1,5 +1,12 @@
+body {
+    background-color: rgb(247, 245, 245);
+}
+
 .container {
     display: flex;
+    flex-direction: row;
+    max-width: 1000px;
+    margin: 0 auto;
 }
 
 .item {
@@ -20,12 +27,13 @@ li {
     margin-bottom: 20px;
     padding: 15px 30px;
     list-style-type: none;
+    background-color: rgb(236, 231, 231);
 }
 
 header {
     padding: 20px 0;
     text-align: center;
-    background-color: rgba(159, 193, 204, 0.719);
+    background-color: rgba(152, 170, 177, 0.719);
     margin-bottom: 20px;
     border: 1pt solid black
 }
@@ -33,6 +41,9 @@ header {
 button {
     background-color: black;
     color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;;
 }
 
 nav button {
@@ -42,3 +53,9 @@ nav button {
 nav {
     margin-left: 20px;
 }
+
+li button {
+    margin-top: 10px;
+}
+
+

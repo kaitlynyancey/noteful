@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import NoteItem from './noteItem/noteItem';
 import Header from './header';
 import NotesContext from './NotesContext';
+import NoteError from './NoteError';
 
 class Note extends Component {
     static contextType = NotesContext;
@@ -23,20 +24,23 @@ class Note extends Component {
                 <section className="container">
                     <nav className="item">
                         <button
+                            className="add"
                             onClick={() => this.props.history.goBack()}>
                             Go Back
                         </button>
-                        <div>
+                        <div className="center">
                             <h3>Folder: {folder.name}</h3>
                         </div>
                     </nav>
                     <main className="item item-triple">
-                        <NoteItem
-                            name={note.name}
-                            id={note.id}
-                            dateMod={note.modified}
-                            onDeleteNote={this.handleDeleteNote}
-                        />
+                        <NoteError>
+                            <NoteItem
+                                name={note.name}
+                                id={note.id}
+                                dateMod={note.modified}
+                                onDeleteNote={this.handleDeleteNote}
+                            />
+                        </NoteError>
                         <div>
                             <h3>Content:</h3>
                             <p>{note.content}</p>
