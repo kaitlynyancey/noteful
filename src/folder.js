@@ -16,26 +16,25 @@ class Folder extends Component {
                 <FolderError>
                     <FolderItem
                         id={folder.id}
-                        name={folder.name}
+                        foldername={folder.foldername}
                     />
                 </FolderError>
             )
         });
         const notes = this.context.notes.map(note => {
-            if (note.folderId === this.props.match.params.folderId) {
+            if (parseInt(note.folder_id) === parseInt(this.props.match.params.folderId)) {
                 return (
                     <NoteError>
                         <NoteItem
-                            name={note.name}
+                            notename={note.notename}
                             id={note.id}
-                            dateMod={note.modified}
+                            date_modified={note.date_modified}
                         />
                     </NoteError>
                 )
             }
         }
         )
-
         return (
             <div>
                 <Header />

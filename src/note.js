@@ -6,17 +6,16 @@ import NoteError from './NoteError';
 
 class Note extends Component {
     static contextType = NotesContext;
-
     handleDeleteNote = noteId => {
         this.props.history.push('/')
     }
 
     render() {
         const note = this.context.notes.find(itm =>
-            itm.id === this.props.match.params.noteId
+            parseInt(itm.id) === parseInt(this.props.match.params.noteId)
         )
         const folder = this.context.folders.find(itm =>
-            itm.id === note.folderId
+            parseInt(itm.id) === parseInt(note.folder_id)
         )
         return (
             <div>
@@ -29,15 +28,15 @@ class Note extends Component {
                             Go Back
                         </button>
                         <div className="center">
-                            <h3>Folder: {folder.name}</h3>
+                            <h3>Folder: {folder.foldername}</h3>
                         </div>
                     </nav>
                     <main className="item item-triple">
                         <NoteError>
                             <NoteItem
-                                name={note.name}
+                                notename={note.notename}
                                 id={note.id}
-                                dateMod={note.modified}
+                                date_modified={note.date_modified}
                                 onDeleteNote={this.handleDeleteNote}
                             />
                         </NoteError>
@@ -45,6 +44,12 @@ class Note extends Component {
                             <h3>Content:</h3>
                             <p>{note.content}</p>
                         </div>
+                        <button
+                            className="edit"
+                            onClick={() => this.props.history.push(`/edit/${note.id}`)}
+                        >
+                            Edit Note
+                        </button>
                     </main>
                 </section>
             </div>

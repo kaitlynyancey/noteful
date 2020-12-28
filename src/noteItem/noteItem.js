@@ -3,59 +3,80 @@ import { Link } from 'react-router-dom';
 import NotesContext from '../NotesContext';
 import PropTypes from 'prop-types';
 
-function deleteNoteRequest(noteId, callback, onDeleteNote) {
-    fetch(`http://localhost:9090/notes/${noteId}`, {
-        method: 'DELETE'
-    })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(response.status)
-            }
-            return response.json()
-        })
-        .then(data => {
-            onDeleteNote(noteId)
-            callback(noteId)
-        })
-        .catch(error => console.error(error))
-}
+// function deleteNoteRequest(noteId, callback, onDeleteNote) {
+//     console.log(noteId)
+//     fetch(`http://localhost:8000/api/notes/${noteId}`, {
+//         method: 'DELETE',
+//         headers: {
+//             'content-type': 'application/json'
+//         },
+//     })
+//         .then(response => {
+//             if (!response.ok) {
+//                 throw new Error(response.status)
+//             }
+//             return response.json()
+//         })
+//         .then(data => {
+//             this.context.deleteNote(noteId)
+//             onDeleteNote(noteId)
+//             callback(noteId)
+//         })
+//         .catch(error => console.error(error))
+// }
 
 class NoteItem extends Component {
-    static defaultProps={
-        onDeleteNote: () => {},
+    static defaultProps = {
+        onDeleteNote: () => { },
     }
+    static contextType = NotesContext
+
+    handleClickDelete = e => {
+        e.preventDefault()
+        const noteId = this.props.id
+
+        fetch(`http://localhost:8000/api/notes/${noteId}`, {
+            method: 'DELETE',
+            headers: {
+                'content-type': 'application/json'
+            },
+        })
+            .then(res => {
+                if (!res.ok)
+                    return res.json().then(e => Promise.reject(e))
+            })
+            .then(() => {
+                this.props.onDeleteNote(noteId)
+                this.context.deleteNote(noteId)
+            })
+            .catch(error => {
+                console.error({ error })
+            })
+    }
+
     render() {
         return (
-            <NotesContext.Consumer>
-                {(context) => (
-                    <li key={this.props.id}>
-                        <Link to={`/note/${this.props.id}`}>
-                            <h3>{this.props.name}</h3>
-                        </Link>
-                        <p>Date Modified: {this.props.dateMod}</p>
-                        <button
-                            className='deleteNote'
-                            onClick={() => {
-                                deleteNoteRequest(
-                                    this.props.id,
-                                    context.deleteNote,
-                                    this.props.onDeleteNote,
-                                )
-                            }}
-                        >
-                            Delete Note
+            <li key={this.props.id}>
+                <Link to={`/note/${this.props.id}`}>
+                    <h3>{this.props.notename}</h3>
+                </Link>
+                <p>Date Modified: {this.props.date_modified}</p>
+                <button
+                    className='deleteNote'
+                    type = 'button'
+                    onClick={this.handleClickDelete}
+                >
+                    Delete Note
                         </button>
-                    </li>
-                )}
-            </NotesContext.Consumer>
+            </li>
         )
     }
 }
 
 NoteItem.propTypes = {
-    name: PropTypes.string.isRequired,
-    id: PropTypes.string.isRequired,
-    dateMod: PropTypes.string.isRequired
+    notename: PropTypes.string.isRequired,
+    id: PropTypes.number.isRequired,
+    date_modified: PropTypes.string.isRequired
 }
 
 export default NoteItem;

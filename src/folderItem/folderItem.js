@@ -7,7 +7,7 @@ class FolderItem extends Component {
         return (
             <li key={this.props.id}>
                 <NavLink to={`/folder/${this.props.id}`}>
-                    <h3>{this.props.name}</h3>
+                    <h3>{this.props.foldername}</h3>
                 </NavLink>
             </li>
         )
@@ -15,8 +15,8 @@ class FolderItem extends Component {
 }
 
 FolderItem.propTypes = {
-    name: PropTypes.string.isRequired,
-    id: PropTypes.string.isRequired,
+    foldername: PropTypes.string.isRequired,
+    id: PropTypes.number.isRequired,
 }
 
 export default FolderItem;

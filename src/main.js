@@ -15,9 +15,9 @@ class Main extends Component {
             return (
                 <NoteError>
                     <NoteItem
-                        name={note.name}
+                        notename={note.notename}
                         id={note.id}
-                        dateMod={note.modified}
+                        date_modified={note.date_modified}
                     />
                 </NoteError>
             )
@@ -27,7 +27,7 @@ class Main extends Component {
                 <FolderError>
                     <FolderItem
                         id={folder.id}
-                        name={folder.name}
+                        foldername={folder.foldername}
                     />
                 </FolderError>
             )

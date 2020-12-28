@@ -18,13 +18,13 @@ class AddNote extends Component {
     handleSubmit = e => {
         e.preventDefault()
         const newNote = {
-            name: e.target.noteName.value,
-            modified: new Date(),
-            folderId: e.target.folders.value,
+            notename: e.target.noteName.value,
+            date_modified: new Date(),
+            folder_id: e.target.folders.value,
             content: e.target.noteContent.value
         }
         this.setState({ error: null })
-        fetch('http://localhost:9090/notes', {
+        fetch('http://localhost:8000/api/notes', {
             method: 'POST',
             body: JSON.stringify(newNote),
             headers: {
@@ -55,14 +55,14 @@ class AddNote extends Component {
         const folderList = this.context.folders.map(folder => {
             return(
                 <option id={folder.id} value={folder.id}>
-                    {folder.name}
+                    {folder.foldername}
                 </option>
             )
         })
         return (
             <section className='AddNote'>
                 <Header />
-                <h2>Add a new folder</h2>
+                <h2>Add a new note</h2>
                 <form
                     className='AddNote_form'
                     onSubmit={this.handleSubmit}

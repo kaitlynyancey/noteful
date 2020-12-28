@@ -18,11 +18,11 @@ class AddFolder extends Component {
     handleSubmit = e => {
         e.preventDefault()
         const newFolder = {
-            name: e.target.folderName.value
+            foldername: e.target.folderName.value
         }
         console.log()
         this.setState({ error: null })
-        fetch('http://localhost:9090/folders', {
+        fetch('http://localhost:8000/api/folders', {
             method: 'POST',
             body: JSON.stringify(newFolder),
             headers: {

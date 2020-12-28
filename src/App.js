@@ -7,6 +7,7 @@ import Folder from './folder.js';
 import NotesContext from './NotesContext';
 import AddFolder from './AddFolder/AddFolder';
 import AddNote from './AddNote/AddNote';
+import EditNote from './EditNote/EditNote';
 
 class App extends Component {
   constructor(props) {
@@ -49,32 +50,40 @@ class App extends Component {
     this.state.notes.push(note)
   }
 
-  componentDidMount() {
-    fetch('http://localhost:9090/folders', {
-      method: 'GET'
+  updateNote = updatedNote => {
+    this.setState({
+      notes: this.state.notes.map(note =>
+        (note.id !== updatedNote.id) ? note : updatedNote
+      )
     })
-    .then(response => {
-      if(!response.ok){
-        throw new Error(response.status)
-      }
-      return response.json()
-    })
-    .then(this.setFolders)
-    .catch(error => this.setState({ error }))
-
-    fetch('http://localhost:9090/notes', {
-      method: 'GET'
-    })
-    .then(response => {
-      if(!response.ok){
-        throw new Error(response.status)
-      }
-      return response.json()
-    })
-    .then(this.setNotes)
-    .catch(error => this.setState({ error }))
   }
-  
+
+  componentDidMount() {
+    fetch('http://localhost:8000/api/folders', {
+      method: 'GET'
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(response.status)
+        }
+        return response.json()
+      })
+      .then(this.setFolders)
+      .catch(error => this.setState({ error }))
+
+    fetch('http://localhost:8000/api/notes', {
+      method: 'GET'
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(response.status)
+        }
+        return response.json()
+      })
+      .then(this.setNotes)
+      .catch(error => this.setState({ error }))
+  }
+
 
   render() {
     const contextValue = {
@@ -82,7 +91,8 @@ class App extends Component {
       folders: this.state.folders,
       deleteNote: this.deleteNote,
       addFolder: this.addFolder,
-      addNote: this.addNote
+      addNote: this.addNote,
+      updateNote: this.updateNote,
     }
     return (
       <div>
@@ -106,6 +116,10 @@ class App extends Component {
           <Route
             path='/addnote'
             component={AddNote}
+          />
+          <Route
+            path='/edit/:noteId'
+            component={EditNote}
           />
         </NotesContext.Provider>
       </div>
