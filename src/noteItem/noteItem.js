@@ -2,28 +2,8 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import NotesContext from '../NotesContext';
 import PropTypes from 'prop-types';
+import config from '../config';
 
-// function deleteNoteRequest(noteId, callback, onDeleteNote) {
-//     console.log(noteId)
-//     fetch(`http://localhost:8000/api/notes/${noteId}`, {
-//         method: 'DELETE',
-//         headers: {
-//             'content-type': 'application/json'
-//         },
-//     })
-//         .then(response => {
-//             if (!response.ok) {
-//                 throw new Error(response.status)
-//             }
-//             return response.json()
-//         })
-//         .then(data => {
-//             this.context.deleteNote(noteId)
-//             onDeleteNote(noteId)
-//             callback(noteId)
-//         })
-//         .catch(error => console.error(error))
-// }
 
 class NoteItem extends Component {
     static defaultProps = {
@@ -35,7 +15,7 @@ class NoteItem extends Component {
         e.preventDefault()
         const noteId = this.props.id
 
-        fetch(`http://localhost:8000/api/notes/${noteId}`, {
+        fetch(`${config.API_ENDPOINT}api/notes/${noteId}`, {
             method: 'DELETE',
             headers: {
                 'content-type': 'application/json'

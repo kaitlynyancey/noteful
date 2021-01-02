@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import NotesContext from '../NotesContext';
 import Header from '../header';
 import './AddFolder.css';
+import config from '../config'
 
 class AddFolder extends Component {
 
@@ -22,7 +23,7 @@ class AddFolder extends Component {
         }
         console.log()
         this.setState({ error: null })
-        fetch('http://localhost:8000/api/folders', {
+        fetch(`${config.API_ENDPOINT}api/folders`, {
             method: 'POST',
             body: JSON.stringify(newFolder),
             headers: {

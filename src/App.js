@@ -8,6 +8,7 @@ import NotesContext from './NotesContext';
 import AddFolder from './AddFolder/AddFolder';
 import AddNote from './AddNote/AddNote';
 import EditNote from './EditNote/EditNote';
+import config from './config';
 
 class App extends Component {
   constructor(props) {
@@ -51,15 +52,16 @@ class App extends Component {
   }
 
   updateNote = updatedNote => {
+    const updatedNotes = this.state.notes.map(note =>
+          (note.id !== updatedNote.id) ? note : updatedNote
+        )
     this.setState({
-      notes: this.state.notes.map(note =>
-        (note.id !== updatedNote.id) ? note : updatedNote
-      )
+      updatedNotes
     })
   }
 
   componentDidMount() {
-    fetch('http://localhost:8000/api/folders', {
+    fetch(`${config.API_ENDPOINT}api/folders`, {
       method: 'GET'
     })
       .then(response => {
@@ -71,7 +73,7 @@ class App extends Component {
       .then(this.setFolders)
       .catch(error => this.setState({ error }))
 
-    fetch('http://localhost:8000/api/notes', {
+    fetch(`${config.API_ENDPOINT}api/notes`, {
       method: 'GET'
     })
       .then(response => {

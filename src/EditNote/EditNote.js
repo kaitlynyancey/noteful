@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Header from '../header';
 import NotesContext from '../NotesContext';
+import config from '../config';
 
 export default class EditNote extends Component {
     constructor(props) {
@@ -31,7 +32,7 @@ export default class EditNote extends Component {
 
     componentDidMount() {
         const noteId = this.props.match.params.noteId
-        fetch(`http://localhost:8000/api/notes/${noteId}`, {
+        fetch(`${config.API_ENDPOINT}api/notes/${noteId}`, {
             method: 'GET'
         })
             .then(response => {
@@ -58,7 +59,7 @@ export default class EditNote extends Component {
             content: e.target.noteContent.value
         }
         this.setState({ error: null })
-        fetch(`http://localhost:8000/api/notes/${this.props.match.params.noteId}`, {
+        fetch(`${config.API_ENDPOINT}api/notes/${this.props.match.params.noteId}`, {
             method: 'PATCH',
             body: JSON.stringify(newNote),
             headers: {
@@ -106,7 +107,7 @@ export default class EditNote extends Component {
             <div>
                 <Header />
                 <section className='EditNoteForm'>
-                    <h2>Edit article</h2>
+                    <h2>Edit Note</h2>
                     <form
                         className='EditNote_form'
                         onSubmit={this.handleSubmit}

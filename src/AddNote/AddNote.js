@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import NotesContext from '../NotesContext';
 import Header from '../header';
-import './AddNote.css'
+import './AddNote.css';
+import config from '../config';
 
 class AddNote extends Component {
 
@@ -24,7 +25,7 @@ class AddNote extends Component {
             content: e.target.noteContent.value
         }
         this.setState({ error: null })
-        fetch('http://localhost:8000/api/notes', {
+        fetch(`${config.API_ENDPOINT}api/notes`, {
             method: 'POST',
             body: JSON.stringify(newNote),
             headers: {
